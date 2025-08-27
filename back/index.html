@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Viva Sorte</title>
+
+    <link href="css/style.css" rel="stylesheet" />
+    <link href="css/header.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="css/bootstrap.min.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="css/bootstrap-icons.min.css" />
+
+    <script>
+      window.pixelId = "68ae4da25f826c71d1f1b200";
+      var a = document.createElement("script");
+      a.setAttribute("async", "");
+      a.setAttribute("defer", "");
+      a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+      document.head.appendChild(a);
+    </script>
+
+    <script
+      src="js/latest.js"
+      data-utmify-prevent-subids=""
+      async=""
+      defer=""
+    ></script>
+
+    <script>
+      // Captura os UTMs assim que a página carregar
+      document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmParams = {
+          utm_source: urlParams.get("utm_source") || null,
+          utm_medium: urlParams.get("utm_medium") || null,
+          utm_campaign: urlParams.get("utm_campaign") || null,
+          utm_content: urlParams.get("utm_content") || null,
+          utm_term: urlParams.get("utm_term") || null,
+          src: urlParams.get("src") || null,
+          sck: urlParams.get("sck") || null,
+        };
+        localStorage.setItem("utmParams", JSON.stringify(utmParams));
+        console.log("UTMs capturados:", utmParams); // Debug
+      });
+    </script>
+    <!-- Meta Pixel Code -->
+    <script>
+      !(function (f, b, e, v, n, t, s) {
+        if (f.fbq) return;
+        n = f.fbq = function () {
+          n.callMethod
+            ? n.callMethod.apply(n, arguments)
+            : n.queue.push(arguments);
+        };
+        if (!f._fbq) f._fbq = n;
+        n.push = n;
+        n.loaded = !0;
+        n.version = "2.0";
+        n.queue = [];
+        t = b.createElement(e);
+        t.async = !0;
+        t.src = v;
+        s = b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t, s);
+      })(
+        window,
+        document,
+        "script",
+        "https://connect.facebook.net/en_US/fbevents.js"
+      );
+      fbq("init", "4105889866337244");
+      fbq("track", "PageView");
+    </script>
+    <noscript>
+      <img
+        height="1"
+        width="1"
+        style="display: none"
+        src="https://www.facebook.com/tr?id=4105889866337244&ev=PageView&noscript=1"
+      />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Kwai Pixel Code -->
+
+    <!-- End Kwai Pixel Code -->
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="menu-container">
+          <div class="logo-group">
+            <img
+              src="images/logo.png"
+              class="logo"
+              alt="Logomarca do Viva Sorte"
+              draggable="false"
+            />
+            <svg
+              class="svg-inline--fa fa-bars text-inherit fa-fw"
+              aria-hidden="true"
+              focusable="false"
+              data-prefix="fas"
+              data-icon="bars"
+              role="img"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 448 512"
+              style="display: inline-block"
+            ></svg>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="alert-banner">
+      <div class="container">
+        <div class="alert-content">
+          <i class="bi bi-exclamation-triangle-fill alert-icon"></i>
+          <div class="alert-text">
+            <span>🔥 ATENÇÃO: 50% DE DESCONTO</span>
+            <span>EM TODOS OS TÍTULOS! 🔥</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="banner">
+      <div class="container-banner">
+        <div
+          id="carouselExampleSlidesOnly"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="tag-compre-agora">
+                <span>Compre agora!</span>
+              </div>
+              <img
+                src="images/1m.jpg"
+                class="d-block w-100"
+                alt="Banner principal"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sorteio-date w-100 text-center">
+      <h1>
+        O Sorteio será
+        <span style="background-color: #f0ad4e" id="dias-restantes"></span> por
+        apenas <span style="background-color: #2f4eb5">R$0,50</span>
+      </h1>
+    </div>
+
+    <script>
+      function getProximoDomingo() {
+        const hoje = new Date();
+        // Se for domingo (0) e ainda não passou da meia-noite, retorna hoje
+        if (hoje.getDay() === 0 && hoje.getHours() < 24) {
+          return hoje;
+        }
+        const diasAteProximoDomingo = 7 - hoje.getDay();
+        const proximoDomingo = new Date(hoje);
+        proximoDomingo.setDate(
+          hoje.getDate() +
+            (diasAteProximoDomingo === 0 ? 7 : diasAteProximoDomingo)
+        );
+        return proximoDomingo;
+      }
+
+      function formatarData(data) {
+        const dia = data.getDate().toString().padStart(2, "0");
+        const mes = (data.getMonth() + 1).toString().padStart(2, "0");
+        return `${dia}/${mes}`;
+      }
+
+      function atualizarContador() {
+        const diasRestantesSpan = document.getElementById("dias-restantes");
+
+        // Sempre mostra HOJE
+        diasRestantesSpan.textContent = "HOJE";
+      }
+
+      function agendarProximaAtualizacao() {
+        const agora = new Date();
+        const proximaMeiaNoite = new Date(agora);
+        proximaMeiaNoite.setHours(24, 0, 0, 0);
+        const tempoAteProximaAtualizacao = proximaMeiaNoite - agora;
+
+        // Atualiza imediatamente
+        atualizarContador();
+
+        // Agenda próxima atualização para meia-noite
+        setTimeout(() => {
+          atualizarContador();
+          // Depois da primeira atualização à meia-noite, continua atualizando a cada 24h
+          setInterval(atualizarContador, 24 * 60 * 60 * 1000);
+        }, tempoAteProximaAtualizacao);
+      }
+
+      // Inicia o agendamento
+      agendarProximaAtualizacao();
+    </script>
+
+    <div class="container-principal">
+      <div class="cotas">
+        <div class="cotas-one">
+          <button type="button" class="cota" onclick="selecionarValor(20)">
+            <div class="cota-qtd">+20</div>
+            <h1>R$9,90</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+
+          <button type="button" class="cota" onclick="selecionarValor(30)">
+            <div class="cota-qtd">+30</div>
+            <h1>R$14,85</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+
+          <button type="button" class="cota" onclick="selecionarValor(40)">
+            <div class="cota-qtd">+40</div>
+            <h1>R$19,80</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+        </div>
+
+        <div class="cotas-one">
+          <button type="button" class="cota" onclick="selecionarValor(70)">
+            <i class="bi bi-star-fill destaque"></i>
+            <div class="cota-qtd">+70</div>
+            <h1>R$34,65</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+
+          <button type="button" class="cota" onclick="selecionarValor(100)">
+            <div class="cota-qtd">+100</div>
+            <h1>R$49,50</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+
+          <button type="button" class="cota" onclick="selecionarValor(200)">
+            <div class="cota-qtd">+200</div>
+            <h1>R$99,00</h1>
+            <h2>SELECIONAR</h2>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-principal">
+      <div class="contador-cotas">
+        <span>
+          <button
+            type="button"
+            class="btn-contador-cotas"
+            onclick="decrementar()"
+          >
+            -
+          </button>
+        </span>
+        <input
+          type="number"
+          id="numero"
+          class="input-contador-cotas"
+          value="0"
+          min="0"
+          oninput="highlightButton()"
+        />
+        <span>
+          <button
+            type="button"
+            class="btn-contador-cotas"
+            onclick="incrementar()"
+          >
+            +
+          </button>
+        </span>
+      </div>
+
+      <button
+        type="button"
+        id="btn-adicionar-carrinho"
+        class="adc-carrinho"
+        onclick="adicionarAoCarrinho()"
+        disabled=""
+      >
+        <i class="bi bi-cart-fill"></i> Comprar
+      </button>
+
+      <div class="sorteio-date w-100 text-center" style="margin-top: 5px">
+        <br />
+        <h1 style="font-size: 0.72rem">
+          Comprar mais títulos aumenta suas chances de ganhar!
+        </h1>
+      </div>
+    </div>
+
+    <script>
+      const precoPorUnidade = 0.495;
+
+      function incrementar() {
+        var input = document.getElementById("numero");
+        var valorAtual = parseInt(input.value);
+        if (valorAtual < 200) {
+          if (valorAtual === 0) {
+            input.value = 20;
+          } else if (valorAtual === 20) {
+            input.value = 30;
+          } else if (valorAtual === 30) {
+            input.value = 40;
+          } else if (valorAtual === 40) {
+            input.value = 70;
+          } else if (valorAtual === 70) {
+            input.value = 100;
+          } else if (valorAtual === 100) {
+            input.value = 200;
+          }
+        }
+        highlightButton();
+      }
+
+      function decrementar() {
+        var input = document.getElementById("numero");
+        var valorAtual = parseInt(input.value);
+        if (valorAtual > 20) {
+          if (valorAtual === 200) {
+            input.value = 100;
+          } else if (valorAtual === 100) {
+            input.value = 70;
+          } else if (valorAtual === 70) {
+            input.value = 40;
+          } else if (valorAtual === 40) {
+            input.value = 30;
+          } else if (valorAtual === 30) {
+            input.value = 20;
+          }
+        }
+        highlightButton();
+      }
+
+      function highlightButton() {
+        var input = document.getElementById("numero");
+        var valorAtual = parseInt(input.value);
+        var botoesCotas = document.querySelectorAll(".cota");
+        var botaoAdicionarCarrinho = document.getElementById(
+          "btn-adicionar-carrinho"
+        );
+
+        botoesCotas.forEach(function (botao) {
+          botao.classList.remove("cota-selected");
+          var valorBotao = parseInt(
+            botao.querySelector(".cota-qtd").innerText.trim()
+          );
+          if (valorBotao === valorAtual) {
+            botao.classList.add("cota-selected");
+          }
+        });
+
+        botaoAdicionarCarrinho.disabled = valorAtual === 0;
+      }
+
+      function selecionarValor(quantidade) {
+        const input = document.getElementById("numero");
+        input.value = quantidade;
+        highlightButton();
+      }
+
+      function adicionarAoCarrinho() {
+        const quantidade = document.getElementById("numero").value;
+        const valorTotal = (quantidade * precoPorUnidade).toFixed(2);
+
+        // Pegar os parâmetros UTM da URL atual
+        const urlParams = new URLSearchParams(window.location.search);
+        const utmSource = urlParams.get("utm_source") || "";
+        const utmMedium = urlParams.get("utm_medium") || "";
+        const utmCampaign = urlParams.get("utm_campaign") || "";
+
+        // Definir os links baseados na quantidade
+        let checkoutUrl;
+        switch (parseInt(quantidade)) {
+          case 20:
+            checkoutUrl = "../checkout.html";
+            break;
+          case 30:
+            checkoutUrl = "../checkout.html";
+            break;
+          case 40:
+            checkoutUrl = "../checkout.html";
+            break;
+          case 70:
+            checkoutUrl = "../checkout.html";
+            break;
+          case 100:
+            checkoutUrl = "../checkout.html";
+            break;
+          case 200:
+            checkoutUrl = "../checkout.html";
+            break;
+          default:
+            checkoutUrl = "../checkout.html";
+        }
+
+        // Adicionar os parâmetros à URL
+        checkoutUrl +=
+          (checkoutUrl.includes("?") ? "&" : "?") +
+          "quantidade=" +
+          quantidade +
+          "&valor=" +
+          valorTotal +
+          "&utm_source=" +
+          encodeURIComponent(utmSource) +
+          "&utm_medium=" +
+          encodeURIComponent(utmMedium) +
+          "&utm_campaign=" +
+          encodeURIComponent(utmCampaign);
+
+        // Redirecionar para a URL construída
+        window.location.href = checkoutUrl;
+      }
+
+      document.getElementById("numero").addEventListener("input", function () {
+        this.value = this.value.replace(/[^0-9]/g, "");
+        var valor = parseInt(this.value);
+        if (valor > 500) {
+          this.value = 500;
+        } else if (valor < 10) {
+          this.value = 0;
+        } else if (valor % 10 !== 0) {
+          this.value = Math.floor(valor / 10) * 10;
+        }
+        highlightButton();
+      });
+    </script>
+
+    <script src="js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script
+      src="js/latest.js"
+      data-utmify-prevent-subids=""
+      async=""
+      defer=""
+    ></script>
+  </body>
+</html>
